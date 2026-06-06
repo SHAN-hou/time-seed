@@ -31,36 +31,17 @@
             -webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;
             padding-bottom:calc(var(--tab-height) + var(--safe-bottom) + 16px);
         }
-
-        /* 保存指示器 */
         .save-indicator {
-            position: fixed;
-            top: 12px;
-            right: 16px;
-            z-index: 300;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.65rem;
-            color: var(--sub);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.4s;
+            position:fixed;top:12px;right:16px;z-index:300;display:flex;align-items:center;gap:5px;
+            font-size:0.65rem;color:var(--sub);pointer-events:none;opacity:0;transition:opacity 0.4s;
         }
-        .save-indicator.show { opacity: 1; }
-        .save-indicator .dot {
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            background: var(--accent2);
-            transition: all 0.3s;
-        }
-        .save-indicator .dot.pulse { transform: scale(1.8); background: #4caf82; }
-
+        .save-indicator.show{opacity:1;}
+        .save-indicator .dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);transition:all 0.3s;}
+        .save-indicator .dot.pulse{transform:scale(1.8);background:#4caf82;}
         .header{padding:48px 20px 12px;display:flex;align-items:center;justify-content:space-between;}
         .header .greeting{font-size:1.65rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;}
         .header .greeting small{display:block;font-size:0.85rem;font-weight:400;color:var(--sub);margin-top:2px;}
         .header .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#fdd9b5,#f8c291);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
-
         .overview{margin:8px 16px 6px;background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);display:flex;gap:6px;}
         .overview .stat{flex:1;text-align:center;}
         .overview .stat .num{font-size:1.6rem;font-weight:700;letter-spacing:-0.03em;}
@@ -69,7 +50,6 @@
         .overview .stat .num.seed{color:var(--accent);}
         .overview .stat .lbl{font-size:0.7rem;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:0.04em;}
         .overview .divider{width:1px;background:#ece7dc;border-radius:1px;margin:4px 0;}
-
         .pomodoro-card{margin:6px 16px;background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden;}
         .pomodoro-card .timer-ring{width:140px;height:140px;margin:0 auto 12px;position:relative;}
         .pomodoro-card .timer-ring svg{transform:rotate(-90deg);width:140px;height:140px;}
@@ -85,7 +65,6 @@
         .btn-secondary{background:#f0ebe0;color:var(--text);}
         .btn-secondary:active{background:#e5ddcf;transform:scale(0.96);}
         .btn-sm{padding:6px 14px;font-size:0.78rem;}
-
         .section-title{margin:18px 20px 8px;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--sub);display:flex;align-items:center;gap:6px;}
         .section-title::after{content:'';flex:1;height:1px;background:#e5ddcf;border-radius:1px;}
         .task-list{margin:0 16px;list-style:none;display:flex;flex-direction:column;gap:8px;}
@@ -101,23 +80,19 @@
         .task-item .task-text{font-size:0.92rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
         .task-item .task-meta{font-size:0.7rem;color:var(--sub);display:flex;gap:8px;margin-top:2px;}
         .task-item .task-meta span{display:flex;align-items:center;gap:3px;}
-
         .add-task-bar{margin:10px 16px;display:flex;gap:8px;}
         .add-task-bar input{flex:1;border:2px solid #e5ddcf;border-radius:24px;padding:10px 16px;font-family:var(--font);font-size:0.9rem;background:var(--card);outline:none;transition:var(--transition);}
         .add-task-bar input:focus{border-color:var(--accent);}
         .add-task-bar .btn{flex-shrink:0;}
-
         .tab-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--tab-height);background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,0.06);display:flex;align-items:flex-start;padding-top:8px;padding-bottom:var(--safe-bottom);z-index:100;}
         .tab-bar .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:var(--transition);color:#b8ae9c;font-size:0.65rem;font-weight:500;letter-spacing:0.02em;border:none;background:none;font-family:var(--font);}
         .tab-bar .tab .icon{font-size:1.4rem;transition:var(--transition);}
         .tab-bar .tab.active{color:var(--accent);}
         .tab-bar .tab.active .icon{transform:translateY(-2px);}
         .tab-bar .tab:active .icon{transform:scale(0.85);}
-
         .panel{display:none;animation:fadeSlideIn 0.3s ease;}
         .panel.active{display:block;}
         @keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-
         .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 16px;}
         .stats-card{background:var(--card);border-radius:var(--radius-sm);padding:16px;box-shadow:var(--shadow);text-align:center;}
         .stats-card .big{font-size:2rem;font-weight:700;letter-spacing:-0.03em;}
@@ -125,53 +100,31 @@
         .streak-banner{margin:8px 16px;background:linear-gradient(135deg,#fff6ed,#ffe8d6);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow);}
         .streak-banner .flame{font-size:3rem;}
         .streak-banner .streak-num{font-size:2.4rem;font-weight:700;color:var(--accent);}
-
         .toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#2c2416;color:#fff;padding:10px 22px;border-radius:24px;font-size:0.85rem;font-weight:500;z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:nowrap;}
         .toast.show{opacity:1;}
-
         .empty-state{text-align:center;padding:40px 20px;color:var(--sub);}
         .empty-state .emoji{font-size:3.5rem;display:block;margin-bottom:10px;}
         .empty-state p{font-size:0.9rem;}
-
-        /* 数据恢复弹窗 */
-        .recovery-banner {
-            margin: 10px 16px;
-            background: #fffef5;
-            border: 1px solid #f0e5b0;
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            font-size: 0.8rem;
-            color: #8a7440;
-            display: none;
-            align-items: center;
-            gap: 8px;
-        }
-        .recovery-banner.show { display: flex; }
-        .recovery-banner .btn { flex-shrink: 0; white-space: nowrap; }
+        .recovery-banner{margin:10px 16px;background:#fffef5;border:1px solid #f0e5b0;border-radius:var(--radius-sm);padding:12px 16px;font-size:0.8rem;color:#8a7440;display:none;align-items:center;gap:8px;}
+        .recovery-banner.show{display:flex;}
+        .recovery-banner .btn{flex-shrink:0;white-space:nowrap;}
     </style>
 </head>
 <body>
 
-    <!-- 保存指示器 -->
     <div class="save-indicator" id="saveIndicator"><span class="dot" id="saveDot"></span>已保存</div>
-
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
-
-    <!-- 数据恢复提示 -->
     <div class="recovery-banner" id="recoveryBanner">
         📦 检测到之前的备份数据，是否恢复？
         <button class="btn btn-secondary btn-sm" onclick="recoverBackup()">恢复</button>
         <button class="btn btn-secondary btn-sm" onclick="dismissRecovery()">忽略</button>
     </div>
 
-    <!-- Header -->
     <div class="header">
         <div class="greeting" id="greeting">早安 ☀️<small>今天也要好好种下时光的种子</small></div>
         <div class="avatar">🌱</div>
     </div>
 
-    <!-- ── 面板1：主页 ── -->
     <div class="panel active" id="panel-home">
         <div class="overview">
             <div class="stat"><div class="num done" id="statDone">0</div><div class="lbl">已完成</div></div>
@@ -206,7 +159,6 @@
         </div>
     </div>
 
-    <!-- ── 面板2：任务管理 ── -->
     <div class="panel" id="panel-tasks">
         <div class="section-title">🗂 全部任务</div>
         <ul class="task-list" id="taskListAll"></ul>
@@ -215,7 +167,6 @@
         </div>
     </div>
 
-    <!-- ── 面板3：统计 ── -->
     <div class="panel" id="panel-stats">
         <div class="streak-banner">
             <div class="flame">🔥</div>
@@ -231,7 +182,6 @@
         </div>
     </div>
 
-    <!-- ── 底部导航 ── -->
     <div class="tab-bar">
         <button class="tab active" data-panel="panel-home"><span class="icon">🏠</span> 首页</button>
         <button class="tab" data-panel="panel-tasks"><span class="icon">📝</span> 任务</button>
@@ -239,53 +189,36 @@
     </div>
 
     <script>
-        // ═══════════════ 【核心修复】持久化引擎 ═══════════════
-        const STORAGE_KEY = 'time_seed_data_v3';       // 主存储
-        const BACKUP_KEY = 'time_seed_backup_v3';     // 备份存储
+        // ═══════════════ 持久化引擎 ═══════════════
+        const STORAGE_KEY = 'time_seed_data_v3';
+        const BACKUP_KEY = 'time_seed_backup_v3';
         const TODAY_KEY = () => 'ts_day_' + new Date().toISOString().slice(0, 10);
 
-        // ── 加载数据（带备份恢复）──
         function loadData() {
-            // 尝试主存储
             const raw = localStorage.getItem(STORAGE_KEY);
             if (raw) {
                 try {
                     const data = JSON.parse(raw);
                     if (data && typeof data === 'object') {
-                        // 同时更新备份
                         try { localStorage.setItem(BACKUP_KEY, raw); } catch(e) {}
                         return data;
                     }
-                } catch(e) { /* 主存储损坏，尝试备份 */ }
+                } catch(e) {}
             }
-            // 尝试备份恢复
             const backup = localStorage.getItem(BACKUP_KEY);
             if (backup) {
                 try {
                     const data = JSON.parse(backup);
                     if (data && typeof data === 'object') {
                         localStorage.setItem(STORAGE_KEY, backup);
-                        console.warn('⚠️ 主存储损坏，已从备份恢复');
+                        console.warn('⚠️ 从备份恢复数据');
                         return data;
                     }
                 } catch(e) {}
             }
-            return getDefaultData();
+            return { tasks: [], focusMinutes: {}, pomodoroCount: 0, streak: 0, lastActiveDate: null, totalTasksDone: 0, bestDay: 0 };
         }
 
-        function getDefaultData() {
-            return {
-                tasks: [],
-                focusMinutes: {},
-                pomodoroCount: 0,
-                streak: 0,
-                lastActiveDate: null,
-                totalTasksDone: 0,
-                bestDay: 0,
-            };
-        }
-
-        // ── 保存数据（双写：主存储 + 备份）──
         function saveData(data) {
             try {
                 const json = JSON.stringify(data);
@@ -293,37 +226,32 @@
                 localStorage.setItem(BACKUP_KEY, json);
                 flashSaveIndicator();
             } catch(e) {
-                // localStorage 满了，尝试清理旧备份
-                console.warn('存储空间不足，尝试清理...');
                 try {
                     localStorage.removeItem(BACKUP_KEY);
                     const json2 = JSON.stringify(data);
                     localStorage.setItem(STORAGE_KEY, json2);
                     localStorage.setItem(BACKUP_KEY, json2);
                 } catch(e2) {
-                    showToast('⚠️ 存储空间不足，请清理旧数据');
+                    showToast('⚠️ 存储空间不足');
                 }
             }
         }
 
-        // ── 保存指示器动画 ──
         function flashSaveIndicator() {
             const indicator = document.getElementById('saveIndicator');
             const dot = document.getElementById('saveDot');
             indicator.classList.add('show');
             dot.classList.add('pulse');
-            clearTimeout(window._saveIndicatorTimeout);
-            window._saveIndicatorTimeout = setTimeout(() => {
+            clearTimeout(window._sit);
+            window._sit = setTimeout(() => {
                 dot.classList.remove('pulse');
                 setTimeout(() => indicator.classList.remove('show'), 600);
             }, 400);
         }
 
-        // ── 备份恢复 ──
         function checkBackupRecovery() {
             const mainRaw = localStorage.getItem(STORAGE_KEY);
             const backupRaw = localStorage.getItem(BACKUP_KEY);
-            // 如果主存储为空但备份存在，提示恢复
             if (!mainRaw && backupRaw) {
                 document.getElementById('recoveryBanner').classList.add('show');
             }
@@ -332,8 +260,7 @@
             const backup = localStorage.getItem(BACKUP_KEY);
             if (backup) {
                 try {
-                    const data = JSON.parse(backup);
-                    appData = data;
+                    appData = JSON.parse(backup);
                     saveData(appData);
                     refreshAllUI();
                     showToast('✅ 数据已恢复！');
@@ -345,46 +272,28 @@
             document.getElementById('recoveryBanner').classList.remove('show');
         }
 
-        // ── 应用数据 ──
         let appData = loadData();
-
-        // ═══════════════ 【核心修复】自动保存 ═══════════════
         let _dirty = false;
-        function markDirty() {
-            _dirty = true;
-        }
-        // 每 3 秒检查并保存
+        function markDirty() { _dirty = true; }
+
+        // 每3秒自动保存
         setInterval(() => {
-            if (_dirty) {
-                saveData(appData);
-                _dirty = false;
-            }
+            if (_dirty) { saveData(appData); _dirty = false; }
         }, 3000);
 
-        // 页面隐藏/切后台时立即保存（比 beforeunload 更可靠）
+        // 切后台立即保存
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                saveData(appData);
-                _dirty = false;
-            } else {
-                // 页面恢复可见时重新加载（防止被其他标签页修改）
-                appData = loadData();
-                refreshAllUI();
-            }
+            if (document.hidden) { saveData(appData); _dirty = false; }
+            else { appData = loadData(); refreshAllUI(); }
         });
 
-        // pagehide 比 beforeunload 在移动端更可靠
-        window.addEventListener('pagehide', () => {
-            saveData(appData);
-        });
+        // 页面关闭前保存
+        window.addEventListener('pagehide', () => { saveData(appData); });
 
-        // 监听其他标签页的 storage 变化
+        // 跨标签页同步
         window.addEventListener('storage', (e) => {
             if (e.key === STORAGE_KEY && e.newValue) {
-                try {
-                    appData = JSON.parse(e.newValue);
-                    refreshAllUI();
-                } catch(e) {}
+                try { appData = JSON.parse(e.newValue); refreshAllUI(); } catch(e) {}
             }
         });
 
@@ -395,17 +304,11 @@
         function addTodayFocus(minutes) {
             const key = TODAY_KEY();
             appData.focusMinutes[key] = (appData.focusMinutes[key] || 0) + minutes;
-            if (appData.focusMinutes[key] > appData.bestDay) {
-                appData.bestDay = appData.focusMinutes[key];
-            }
+            if (appData.focusMinutes[key] > appData.bestDay) appData.bestDay = appData.focusMinutes[key];
             const today = new Date().toISOString().slice(0, 10);
             if (appData.lastActiveDate !== today) {
                 const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-                if (appData.lastActiveDate === yesterday) {
-                    appData.streak += 1;
-                } else if (appData.lastActiveDate !== today) {
-                    appData.streak = 1;
-                }
+                appData.streak = (appData.lastActiveDate === yesterday) ? appData.streak + 1 : 1;
                 appData.lastActiveDate = today;
             }
             markDirty();
@@ -413,12 +316,7 @@
 
         // ═══════════════ 番茄钟 ═══════════════
         const CIRCUMFERENCE = 2 * Math.PI * 62;
-        let timerMode = 'focus';
-        let timerSeconds = 25 * 60;
-        let timerTotal = 25 * 60;
-        let timerInterval = null;
-        let timerRunning = false;
-
+        let timerMode = 'focus', timerSeconds = 25 * 60, timerTotal = 25 * 60, timerInterval = null, timerRunning = false;
         const modeConfig = {
             focus: { minutes: 25, emoji: '🍅', label: '专注' },
             shortBreak: { minutes: 5, emoji: '☕', label: '短休息' },
@@ -426,21 +324,14 @@
         };
 
         function switchMode(mode) {
-            if (timerRunning) {
-                if (!confirm('切换模式会重置当前计时，确定吗？')) return;
-                stopTimer();
-            }
+            if (timerRunning) { if (!confirm('切换模式会重置计时，确定吗？')) return; stopTimer(); }
             timerMode = mode;
             timerSeconds = modeConfig[mode].minutes * 60;
             timerTotal = timerSeconds;
-            updateTimerDisplay();
-            updateModeLabel();
-            resetCircle();
+            updateTimerDisplay(); updateModeLabel(); resetCircle();
         }
 
-        function toggleTimer() {
-            if (timerRunning) { pauseTimer(); } else { startTimer(); }
-        }
+        function toggleTimer() { timerRunning ? pauseTimer() : startTimer(); }
 
         function startTimer() {
             timerRunning = true;
@@ -448,81 +339,59 @@
             if (timerSeconds <= 0) {
                 timerSeconds = modeConfig[timerMode].minutes * 60;
                 timerTotal = timerSeconds;
-                updateTimerDisplay();
-                resetCircle();
+                updateTimerDisplay(); resetCircle();
             }
             timerInterval = setInterval(() => {
                 timerSeconds--;
-                updateTimerDisplay();
-                updateCircle();
-                if (timerSeconds <= 0) { finishTimer(); }
+                updateTimerDisplay(); updateCircle();
+                if (timerSeconds <= 0) finishTimer();
             }, 1000);
         }
 
         function pauseTimer() {
-            timerRunning = false;
-            clearInterval(timerInterval);
+            timerRunning = false; clearInterval(timerInterval);
             document.getElementById('btnTimer').textContent = '▶ 继续';
-            markDirty(); // 暂停时也保存
+            markDirty();
         }
 
         function stopTimer() {
-            timerRunning = false;
-            clearInterval(timerInterval);
+            timerRunning = false; clearInterval(timerInterval);
             document.getElementById('btnTimer').textContent = '▶ 开始';
         }
 
         function finishTimer() {
             stopTimer();
-            const mode = timerMode;
-            if (mode === 'focus') {
-                const mins = modeConfig.focus.minutes;
-                addTodayFocus(mins);
+            if (timerMode === 'focus') {
+                addTodayFocus(modeConfig.focus.minutes);
                 appData.pomodoroCount = (appData.pomodoroCount || 0) + 1;
-                markDirty();
-                saveData(appData); // 立即保存
-                _dirty = false;
-                showToast('🎉 一个番茄完成！干得漂亮！');
-                switchMode('shortBreak');
-                startTimer();
+                markDirty(); saveData(appData); _dirty = false;
+                showToast('🎉 一个番茄完成！');
+                switchMode('shortBreak'); startTimer();
             } else {
-                showToast('⏰ 休息结束，准备继续吧~');
+                showToast('⏰ 休息结束~');
                 switchMode('focus');
             }
             refreshAllUI();
         }
 
         function updateTimerDisplay() {
-            const m = Math.floor(timerSeconds / 60);
-            const s = timerSeconds % 60;
-            document.getElementById('timerDisplay').textContent =
-                String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+            const m = Math.floor(timerSeconds / 60), s = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
         }
         function updateModeLabel() {
             const cfg = modeConfig[timerMode];
             document.getElementById('modeLabel').textContent = cfg.emoji + ' ' + cfg.label;
         }
         function updateCircle() {
-            const offset = CIRCUMFERENCE * (1 - timerSeconds / timerTotal);
-            document.getElementById('fgCircle').style.strokeDashoffset = offset;
+            document.getElementById('fgCircle').style.strokeDashoffset = CIRCUMFERENCE * (1 - timerSeconds / timerTotal);
         }
-        function resetCircle() {
-            document.getElementById('fgCircle').style.strokeDashoffset = '0';
-        }
+        function resetCircle() { document.getElementById('fgCircle').style.strokeDashoffset = '0'; }
 
         // ═══════════════ 任务 ═══════════════
         function addTask(text, priority = 'mid') {
-            if (!text) { text = document.getElementById('taskInput').value.trim(); }
+            if (!text) text = document.getElementById('taskInput').value.trim();
             if (!text) return;
-            const task = {
-                id: Date.now(),
-                text,
-                priority,
-                done: false,
-                createdAt: new Date().toISOString(),
-                doneAt: null,
-            };
-            appData.tasks.unshift(task);
+            appData.tasks.unshift({ id: Date.now(), text, priority, done: false, createdAt: new Date().toISOString(), doneAt: null });
             markDirty();
             if (document.getElementById('taskInput')) document.getElementById('taskInput').value = '';
             refreshAllUI();
@@ -534,190 +403,125 @@
             if (!task) return;
             task.done = !task.done;
             task.doneAt = task.done ? new Date().toISOString() : null;
-            if (task.done) {
-                appData.totalTasksDone = (appData.totalTasksDone || 0) + 1;
-            } else {
-                appData.totalTasksDone = Math.max(0, (appData.totalTasksDone || 0) - 1);
-            }
-            markDirty();
-            refreshAllUI();
-            if (task.done) showToast('✅ 太棒了！又完成一项！');
+            appData.totalTasksDone = (appData.totalTasksDone || 0) + (task.done ? 1 : -1);
+            if (appData.totalTasksDone < 0) appData.totalTasksDone = 0;
+            markDirty(); refreshAllUI();
+            if (task.done) showToast('✅ 太棒了！');
         }
 
         function deleteTask(id) {
-            if (!confirm('确定要删除这个任务吗？')) return;
+            if (!confirm('确定删除吗？')) return;
             appData.tasks = appData.tasks.filter(t => t.id !== id);
-            markDirty();
-            refreshAllUI();
+            markDirty(); refreshAllUI();
         }
 
         function clearDone() {
-            const doneCount = appData.tasks.filter(t => t.done).length;
-            if (doneCount === 0) { showToast('没有已完成的任务'); return; }
-            if (!confirm(`确定清除 ${doneCount} 个已完成任务？`)) return;
+            const n = appData.tasks.filter(t => t.done).length;
+            if (!n) { showToast('没有已完成的任务'); return; }
+            if (!confirm(`清除 ${n} 个已完成任务？`)) return;
             appData.tasks = appData.tasks.filter(t => !t.done);
-            markDirty();
-            refreshAllUI();
-            showToast('🧹 已清理');
+            markDirty(); refreshAllUI(); showToast('🧹 已清理');
         }
 
         function setPriority(id, priority) {
             const task = appData.tasks.find(t => t.id === id);
             if (!task) return;
             task.priority = priority;
-            markDirty();
-            refreshAllUI();
+            markDirty(); refreshAllUI();
         }
 
         function renderTaskItem(task) {
-            const priorityClass = 'priority-' + task.priority;
-            const doneClass = task.done ? ' done' : '';
-            const createdAt = new Date(task.createdAt);
-            const timeStr = createdAt.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
-            const priorityLabels = { high: '🔴 高', mid: '🟠 中', low: '🟢 低' };
-            return `
-            <li class="task-item ${priorityClass}${doneClass}" id="task-${task.id}">
+            const pc = 'priority-' + task.priority, dc = task.done ? ' done' : '';
+            const ts = new Date(task.createdAt).toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' });
+            const pl = { high:'🔴 高', mid:'🟠 中', low:'🟢 低' };
+            return `<li class="task-item ${pc}${dc}">
               <div class="check-circle" onclick="toggleTask(${task.id})">✓</div>
               <div class="task-info" onclick="cyclePriority(${task.id})">
-                <div class="task-text">${escapeHtml(task.text)}</div>
-                <div class="task-meta">
-                  <span>${priorityLabels[task.priority]}</span>
-                  <span>🕐 ${timeStr}</span>
-                </div>
+                <div class="task-text">${task.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+                <div class="task-meta"><span>${pl[task.priority]}</span><span>🕐 ${ts}</span></div>
               </div>
-              <button class="btn btn-secondary btn-sm" style="padding:4px 10px;font-size:0.7rem;"
-                onclick="event.stopPropagation();deleteTask(${task.id})">✕</button>
+              <button class="btn btn-secondary btn-sm" style="padding:4px 10px;font-size:0.7rem;" onclick="event.stopPropagation();deleteTask(${task.id})">✕</button>
             </li>`;
         }
 
         function cyclePriority(id) {
             const task = appData.tasks.find(t => t.id === id);
             if (!task) return;
-            const order = ['high', 'mid', 'low'];
-            const idx = order.indexOf(task.priority);
-            setPriority(id, order[(idx + 1) % 3]);
+            const order = ['high','mid','low'];
+            setPriority(id, order[(order.indexOf(task.priority) + 1) % 3]);
         }
 
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        function renderTaskList(containerId, filter = 'all') {
-            const container = document.getElementById(containerId);
-            if (!container) return;
+        function renderTaskList(containerId, filter) {
+            const c = document.getElementById(containerId);
+            if (!c) return;
             let tasks = appData.tasks;
             if (filter === 'incomplete') tasks = tasks.filter(t => !t.done);
-            if (filter === 'today') {
-                const today = new Date().toISOString().slice(0, 10);
-                tasks = tasks.filter(t => t.createdAt.slice(0, 10) === today);
-            }
-            if (tasks.length === 0) {
-                container.innerHTML = `
-                <div class="empty-state">
-                  <span class="emoji">🌱</span>
-                  <p>还没有任务，种下第一颗时光种子吧</p>
-                </div>`;
+            if (!tasks.length) {
+                c.innerHTML = '<div class="empty-state"><span class="emoji">🌱</span><p>还没有任务，种下第一颗时光种子吧</p></div>';
                 return;
             }
-            tasks = [...tasks].sort((a, b) => {
+            tasks = [...tasks].sort((a,b) => {
                 if (a.done !== b.done) return a.done ? 1 : -1;
-                const pOrder = { high: 0, mid: 1, low: 2 };
-                return pOrder[a.priority] - pOrder[b.priority];
+                return {high:0,mid:1,low:2}[a.priority] - {high:0,mid:1,low:2}[b.priority];
             });
-            container.innerHTML = tasks.map(renderTaskItem).join('');
+            c.innerHTML = tasks.map(renderTaskItem).join('');
         }
 
-        // ═══════════════ UI 刷新 ═══════════════
         function refreshAllUI() {
-            const incomplete = appData.tasks.filter(t => !t.done).length;
-            const doneToday = appData.tasks.filter(t => {
-                if (!t.done || !t.doneAt) return false;
-                return t.doneAt.slice(0, 10) === new Date().toISOString().slice(0, 10);
-            }).length;
-            document.getElementById('statDone').textContent = doneToday;
-            document.getElementById('statRemain').textContent = incomplete;
+            const inc = appData.tasks.filter(t => !t.done).length;
+            const doneT = appData.tasks.filter(t => t.done && t.doneAt && t.doneAt.slice(0,10) === new Date().toISOString().slice(0,10)).length;
+            document.getElementById('statDone').textContent = doneT;
+            document.getElementById('statRemain').textContent = inc;
             document.getElementById('statFocus').textContent = getTodayFocus() + 'min';
             renderTaskList('taskListHome', 'incomplete');
             renderTaskList('taskListAll', 'all');
             document.getElementById('streakNum').textContent = appData.streak || 0;
-            document.getElementById('statTotalFocus').textContent =
-                Object.values(appData.focusMinutes).reduce((a, b) => a + b, 0);
+            document.getElementById('statTotalFocus').textContent = Object.values(appData.focusMinutes).reduce((a,b) => a+b, 0);
             document.getElementById('statTotalTasks').textContent = appData.totalTasksDone || 0;
             document.getElementById('statPomodoros').textContent = appData.pomodoroCount || 0;
             document.getElementById('statBestDay').textContent = (appData.bestDay || 0) + 'min';
         }
 
-        // ═══════════════ Toast ═══════════════
         let toastTimer;
         function showToast(msg) {
             const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
+            t.textContent = msg; t.classList.add('show');
             clearTimeout(toastTimer);
             toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
         }
 
-        // ═══════════════ 面板切换 ═══════════════
-        function switchPanel(panelId) {
+        function switchPanel(pid) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(panelId).classList.add('active');
+            document.getElementById(pid).classList.add('active');
             document.querySelectorAll('.tab-bar .tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`[data-panel="${panelId}"]`).classList.add('active');
+            document.querySelector(`[data-panel="${pid}"]`).classList.add('active');
             refreshAllUI();
         }
 
         document.querySelectorAll('.tab-bar .tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                switchPanel(tab.dataset.panel);
-            });
+            tab.addEventListener('click', () => switchPanel(tab.dataset.panel));
         });
 
-        // ═══════════════ 问候语 ═══════════════
         function updateGreeting() {
-            const hour = new Date().getHours();
-            let greet;
-            if (hour < 6) greet = '夜深了 🌙';
-            else if (hour < 9) greet = '早安 ☀️';
-            else if (hour < 12) greet = '上午好 🌤';
-            else if (hour < 14) greet = '中午好 ☀️';
-            else if (hour < 18) greet = '下午好 🌿';
-            else if (hour < 22) greet = '晚上好 🌆';
-            else greet = '夜深了 🌙';
-            const tips = [
-                '今天也要好好种下时光的种子',
-                '专注25分钟，休息5分钟，节奏就是一切',
-                '完成比完美更重要',
-                '每一个番茄，都是对自己的承诺',
-                '把大目标拆成小任务，一步步来',
-            ];
-            const tip = tips[Math.floor(Math.random() * tips.length)];
-            document.getElementById('greeting').innerHTML = `${greet}<small>${tip}</small>`;
+            const h = new Date().getHours();
+            let g;
+            if (h<6) g='夜深了 🌙'; else if (h<9) g='早安 ☀️'; else if (h<12) g='上午好 🌤';
+            else if (h<14) g='中午好 ☀️'; else if (h<18) g='下午好 🌿'; else if (h<22) g='晚上好 🌆'; else g='夜深了 🌙';
+            const tips = ['今天也要好好种下时光的种子','专注25分钟，休息5分钟，节奏就是一切','完成比完美更重要','每一个番茄，都是对自己的承诺','把大目标拆成小任务，一步步来'];
+            document.getElementById('greeting').innerHTML = `${g}<small>${tips[Math.floor(Math.random()*tips.length)]}</small>`;
         }
 
-        // ═══════════════ 初始化 ═══════════════
         function init() {
             updateGreeting();
-            updateTimerDisplay();
-            updateModeLabel();
-            resetCircle();
+            updateTimerDisplay(); updateModeLabel(); resetCircle();
             refreshAllUI();
             checkBackupRecovery();
             stopTimer();
             document.getElementById('btnTimer').textContent = '▶ 开始';
-            console.log('🌱 时光种子 v3 — 持久化已加固');
-            console.log('💾 存储键:', STORAGE_KEY);
-            console.log('📦 数据:', appData);
+            console.log('🌱 时光种子 v3 — 数据已加固');
         }
 
-        // 防止 iOS 双击缩放
-        document.addEventListener('dblclick', function(e) {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
+        document.addEventListener('dblclick', e => { if (e.target.closest('button')) e.preventDefault(); }, {passive:false});
         init();
     </script>
 </body>
