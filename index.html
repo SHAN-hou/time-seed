@@ -49,22 +49,33 @@
         .pomodoro-card .timer-ring .time-display{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
         .pomodoro-card .timer-ring .time-display .time{font-size:2.4rem;font-weight:700;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;font-family:'SF Mono','Menlo','Consolas',monospace;}
         .pomodoro-card .timer-ring .time-display .mode-label{font-size:0.72rem;color:var(--sub);font-weight:500;}
-        .pomodoro-card .timer-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center;}
+        .pomodoro-card .timer-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center;margin-top:6px;}
         .btn{border:none;font-family:var(--font);font-size:0.9rem;font-weight:600;padding:10px 22px;border-radius:24px;cursor:pointer;transition:var(--transition);letter-spacing:0.01em;}
         .btn-primary{background:var(--accent);color:#fff;font-size:1rem;padding:12px 28px;box-shadow:0 4px 16px rgba(232,149,106,0.35);}
         .btn-primary:active{background:#d47e55;transform:scale(0.94);box-shadow:0 2px 8px rgba(232,149,106,0.25);}
         .btn-start{
-            background:var(--accent);color:#fff;
-            font-size:1.1rem;padding:14px 34px;border-radius:28px;
-            box-shadow:0 4px 20px rgba(232,149,106,0.4);
-            animation:pulse-btn 2s infinite;
-            letter-spacing:0.03em;
+            background:linear-gradient(135deg,#e8956a,#f0a57a);color:#fff;
+            font-size:1.35rem;font-weight:700;padding:18px 48px;border-radius:32px;
+            box-shadow:0 8px 32px rgba(232,149,106,0.5);
+            animation:pulse-btn 1.8s ease-in-out infinite;
+            letter-spacing:0.06em;
+            min-width:220px;
+            border:none;cursor:pointer;transition:all 0.15s ease;
         }
-        .btn-start:active{background:#d47e55;transform:scale(0.92);box-shadow:0 2px 8px rgba(232,149,106,0.25);animation:none;}
-        .btn-start.running{animation:none;background:#e8956a;box-shadow:0 3px 12px rgba(232,149,106,0.3);}
+        .btn-start:active{
+            transform:scale(0.88);
+            box-shadow:0 4px 12px rgba(232,149,106,0.3);
+            animation:none;
+        }
+        .btn-start.running{
+            animation:none;
+            background:linear-gradient(135deg,#d47e55,#e08560);
+            box-shadow:0 4px 14px rgba(232,149,106,0.35);
+            font-size:1.2rem;
+        }
         @keyframes pulse-btn{
-            0%,100%{box-shadow:0 4px 20px rgba(232,149,106,0.4);transform:translateY(0);}
-            50%{box-shadow:0 8px 30px rgba(232,149,106,0.6);transform:translateY(-2px);}
+            0%,100%{box-shadow:0 8px 32px rgba(232,149,106,0.5);transform:translateY(0);}
+            50%{box-shadow:0 14px 44px rgba(232,149,106,0.7);transform:translateY(-3px);}
         }
         .btn-secondary{background:#f0ebe0;color:var(--text);}
         .btn-secondary:active{background:#e5ddcf;transform:scale(0.96);}
@@ -126,13 +137,11 @@
     <div class="save-indicator" id="saveIndicator"><span class="dot" id="saveDot"></span><span id="saveLabel">已保存</span></div>
     <div class="toast" id="toast"></div>
 
-    <!-- Header -->
     <div class="header">
         <div class="greeting" id="greeting">早安 ☀️<small>今天也要好好种下时光的种子</small></div>
         <div class="avatar">🌱</div>
     </div>
 
-    <!-- ── 面板：主页 ── -->
     <div class="panel active" id="panel-home">
         <div class="overview">
             <div class="stat"><div class="num done" id="statDone">0</div><div class="lbl">已完成</div></div>
@@ -167,7 +176,6 @@
         </div>
     </div>
 
-    <!-- ── 面板：任务管理 ── -->
     <div class="panel" id="panel-tasks">
         <div class="section-title">🗂 全部任务</div>
         <ul class="task-list" id="taskListAll"></ul>
@@ -176,7 +184,6 @@
         </div>
     </div>
 
-    <!-- ── 面板：统计 ── -->
     <div class="panel" id="panel-stats">
         <div class="streak-banner">
             <div class="flame">🔥</div>
@@ -195,7 +202,6 @@
         </div>
     </div>
 
-    <!-- ── 面板：设置 ── -->
     <div class="panel" id="panel-settings">
         <div class="section-title">⚙️ 设置</div>
 
@@ -255,7 +261,6 @@
         </div>
     </div>
 
-    <!-- ── 底部导航 ── -->
     <div class="tab-bar">
         <button class="tab active" data-panel="panel-home"><span class="icon">🏠</span> 首页</button>
         <button class="tab" data-panel="panel-tasks"><span class="icon">📝</span> 任务</button>
@@ -264,7 +269,6 @@
     </div>
 
     <script>
-        // ═══════════════ 存储引擎 ═══════════════
         const STORAGE_KEY = 'time_seed_data_v4';
         const BACKUP_KEY = 'time_seed_backup_v4';
         const TOKEN_KEY = 'time_seed_token';
@@ -329,12 +333,8 @@
             }, 600);
         }
 
-        // ═══════════════ Token 管理 ═══════════════
         let _token = localStorage.getItem(TOKEN_KEY) || '';
         let _gistId = localStorage.getItem(GIST_ID_KEY) || '';
-
-        function getToken() { return _token; }
-        function getGistId() { return _gistId; }
 
         function saveToken() {
             const input = document.getElementById('tokenInput');
@@ -365,7 +365,6 @@
             refreshSettingsUI();
         }
 
-        // ═══════════════ GitHub Gist API ═══════════════
         async function pushToGist(silent) {
             if (!_token) {
                 if (!silent) showToast('⚠️ 请先在设置里粘贴钥匙');
@@ -445,7 +444,6 @@
             const manualSyncCard = document.getElementById('manualSyncCard');
             const clearTokenCard = document.getElementById('clearTokenCard');
             const lastSyncInfo = document.getElementById('lastSyncInfo');
-
             if (_token) {
                 statusArea.innerHTML = '<span class="status-badge online">🔗 钥匙已设置</span>';
                 syncDetail.textContent = _gistId ? '✅ 云端连接正常，数据自动同步中。' : '🔗 钥匙有效，下次操作时将自动创建云端存储。';
@@ -461,7 +459,6 @@
             }
         }
 
-        // ═══════════════ 导出导入 ═══════════════
         function exportData() {
             const dataStr = JSON.stringify(appData, null, 2);
             if (navigator.clipboard) {
@@ -528,12 +525,10 @@
             showToast('🗑 所有数据已清空');
         }
 
-        // ═══════════════ 应用数据 ═══════════════
         let appData = loadData();
         let _dirty = false;
         function markDirty() { _dirty = true; }
 
-        // 每3秒自动保存
         setInterval(() => {
             if (_dirty) {
                 saveData(appData);
@@ -583,7 +578,6 @@
             markDirty();
         }
 
-        // ═══════════════ 番茄钟 ═══════════════
         const CIRCUMFERENCE = 2 * Math.PI * 62;
         let timerMode = 'focus', timerSeconds = 25 * 60, timerTotal = 25 * 60, timerInterval = null, timerRunning = false;
         const modeConfig = {
@@ -671,7 +665,6 @@
         }
         function resetCircle() { document.getElementById('fgCircle').style.strokeDashoffset = '0'; }
 
-        // ═══════════════ 任务 ═══════════════
         function addTask(text, priority) {
             if (!text) text = document.getElementById('taskInput').value.trim();
             if (!text) return;
