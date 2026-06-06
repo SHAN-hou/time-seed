@@ -6,17 +6,10 @@
     <title>时光种子 · Time Seed</title>
     <style>
         :root {
-            --bg: #f8f6f2;
-            --card: #ffffff;
-            --text: #2c2416;
-            --sub: #8b7e6a;
-            --accent: #e8956a;
-            --accent2: #6abf8b;
-            --accent3: #7b9cd8;
-            --urgent: #e0555a;
+            --bg: #f8f6f2; --card: #ffffff; --text: #2c2416; --sub: #8b7e6a;
+            --accent: #e8956a; --accent2: #6abf8b; --accent3: #7b9cd8; --urgent: #e0555a;
             --shadow: 0 2px 16px rgba(44,36,22,0.06);
-            --radius: 18px;
-            --radius-sm: 12px;
+            --radius: 18px; --radius-sm: 12px;
             --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Helvetica Neue', sans-serif;
             --tab-height: 72px;
             --safe-bottom: env(safe-area-inset-bottom, 16px);
@@ -31,13 +24,11 @@
             -webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;
             padding-bottom:calc(var(--tab-height) + var(--safe-bottom) + 16px);
         }
-        .save-indicator {
-            position:fixed;top:12px;right:16px;z-index:300;display:flex;align-items:center;gap:5px;
-            font-size:0.65rem;color:var(--sub);pointer-events:none;opacity:0;transition:opacity 0.4s;
-        }
+        .save-indicator{position:fixed;top:12px;right:16px;z-index:300;display:flex;align-items:center;gap:5px;font-size:0.65rem;color:var(--sub);pointer-events:none;opacity:0;transition:opacity 0.4s;}
         .save-indicator.show{opacity:1;}
         .save-indicator .dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);transition:all 0.3s;}
-        .save-indicator .dot.pulse{transform:scale(1.8);background:#4caf82;}
+        .save-indicator .dot.synced{background:var(--accent3);}
+        .save-indicator .dot.pulse{transform:scale(1.8);}
         .header{padding:48px 20px 12px;display:flex;align-items:center;justify-content:space-between;}
         .header .greeting{font-size:1.65rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;}
         .header .greeting small{display:block;font-size:0.85rem;font-weight:400;color:var(--sub);margin-top:2px;}
@@ -50,7 +41,7 @@
         .overview .stat .num.seed{color:var(--accent);}
         .overview .stat .lbl{font-size:0.7rem;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:0.04em;}
         .overview .divider{width:1px;background:#ece7dc;border-radius:1px;margin:4px 0;}
-        .pomodoro-card{margin:6px 16px;background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden;}
+        .pomodoro-card{margin:6px 16px;background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:center;}
         .pomodoro-card .timer-ring{width:140px;height:140px;margin:0 auto 12px;position:relative;}
         .pomodoro-card .timer-ring svg{transform:rotate(-90deg);width:140px;height:140px;}
         .pomodoro-card .timer-ring .bg-circle{fill:none;stroke:#f0ebe0;stroke-width:8;}
@@ -64,6 +55,8 @@
         .btn-primary:active{background:#d47e55;transform:scale(0.96);}
         .btn-secondary{background:#f0ebe0;color:var(--text);}
         .btn-secondary:active{background:#e5ddcf;transform:scale(0.96);}
+        .btn-danger{background:#fff0ee;color:var(--urgent);}
+        .btn-danger:active{background:#ffe0db;transform:scale(0.96);}
         .btn-sm{padding:6px 14px;font-size:0.78rem;}
         .section-title{margin:18px 20px 8px;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--sub);display:flex;align-items:center;gap:6px;}
         .section-title::after{content:'';flex:1;height:1px;background:#e5ddcf;border-radius:1px;}
@@ -79,11 +72,9 @@
         .task-item .task-info{flex:1;min-width:0;}
         .task-item .task-text{font-size:0.92rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
         .task-item .task-meta{font-size:0.7rem;color:var(--sub);display:flex;gap:8px;margin-top:2px;}
-        .task-item .task-meta span{display:flex;align-items:center;gap:3px;}
         .add-task-bar{margin:10px 16px;display:flex;gap:8px;}
         .add-task-bar input{flex:1;border:2px solid #e5ddcf;border-radius:24px;padding:10px 16px;font-family:var(--font);font-size:0.9rem;background:var(--card);outline:none;transition:var(--transition);}
         .add-task-bar input:focus{border-color:var(--accent);}
-        .add-task-bar .btn{flex-shrink:0;}
         .tab-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--tab-height);background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,0.06);display:flex;align-items:flex-start;padding-top:8px;padding-bottom:var(--safe-bottom);z-index:100;}
         .tab-bar .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:var(--transition);color:#b8ae9c;font-size:0.65rem;font-weight:500;letter-spacing:0.02em;border:none;background:none;font-family:var(--font);}
         .tab-bar .tab .icon{font-size:1.4rem;transition:var(--transition);}
@@ -105,26 +96,30 @@
         .empty-state{text-align:center;padding:40px 20px;color:var(--sub);}
         .empty-state .emoji{font-size:3.5rem;display:block;margin-bottom:10px;}
         .empty-state p{font-size:0.9rem;}
-        .recovery-banner{margin:10px 16px;background:#fffef5;border:1px solid #f0e5b0;border-radius:var(--radius-sm);padding:12px 16px;font-size:0.8rem;color:#8a7440;display:none;align-items:center;gap:8px;}
-        .recovery-banner.show{display:flex;}
-        .recovery-banner .btn{flex-shrink:0;white-space:nowrap;}
+        .settings-card{background:var(--card);border-radius:var(--radius);padding:18px 20px;margin:8px 16px;box-shadow:var(--shadow);}
+        .settings-card h3{font-size:0.95rem;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+        .settings-card .desc{font-size:0.75rem;color:var(--sub);margin-bottom:10px;line-height:1.5;}
+        .settings-card input[type="text"],.settings-card textarea{width:100%;border:2px solid #e5ddcf;border-radius:12px;padding:10px 14px;font-family:var(--font);font-size:0.85rem;outline:none;transition:var(--transition);resize:vertical;}
+        .settings-card input:focus,.settings-card textarea:focus{border-color:var(--accent);}
+        .settings-card .row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+        .status-badge{display:inline-flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:20px;}
+        .status-badge.online{background:#e8f5e9;color:#388e3c;}
+        .status-badge.offline{background:#f5f5f5;color:#999;}
+        .status-badge.error{background:#fdecea;color:var(--urgent);}
     </style>
 </head>
 <body>
 
-    <div class="save-indicator" id="saveIndicator"><span class="dot" id="saveDot"></span>已保存</div>
+    <div class="save-indicator" id="saveIndicator"><span class="dot" id="saveDot"></span><span id="saveLabel">已保存</span></div>
     <div class="toast" id="toast"></div>
-    <div class="recovery-banner" id="recoveryBanner">
-        📦 检测到之前的备份数据，是否恢复？
-        <button class="btn btn-secondary btn-sm" onclick="recoverBackup()">恢复</button>
-        <button class="btn btn-secondary btn-sm" onclick="dismissRecovery()">忽略</button>
-    </div>
 
+    <!-- ── Header ── -->
     <div class="header">
         <div class="greeting" id="greeting">早安 ☀️<small>今天也要好好种下时光的种子</small></div>
         <div class="avatar">🌱</div>
     </div>
 
+    <!-- ── 面板：主页 ── -->
     <div class="panel active" id="panel-home">
         <div class="overview">
             <div class="stat"><div class="num done" id="statDone">0</div><div class="lbl">已完成</div></div>
@@ -159,6 +154,7 @@
         </div>
     </div>
 
+    <!-- ── 面板：任务管理 ── -->
     <div class="panel" id="panel-tasks">
         <div class="section-title">🗂 全部任务</div>
         <ul class="task-list" id="taskListAll"></ul>
@@ -167,6 +163,7 @@
         </div>
     </div>
 
+    <!-- ── 面板：统计 ── -->
     <div class="panel" id="panel-stats">
         <div class="streak-banner">
             <div class="flame">🔥</div>
@@ -180,18 +177,91 @@
             <div class="stats-card"><div class="big" id="statPomodoros">0</div><div class="lbl">番茄数 🍅</div></div>
             <div class="stats-card"><div class="big" id="statBestDay">-</div><div class="lbl">最佳单日</div></div>
         </div>
+        <div class="settings-card" style="margin-top:10px;">
+            <span style="font-size:0.75rem;color:var(--sub);" id="lastSyncInfo">📂 数据模式：本地</span>
+        </div>
     </div>
 
+    <!-- ── 面板：设置（新增）── -->
+    <div class="panel" id="panel-settings">
+        <div class="section-title">⚙️ 设置</div>
+
+        <!-- 同步状态 -->
+        <div class="settings-card">
+            <h3>☁️ 云同步状态</h3>
+            <div id="syncStatusArea">
+                <span class="status-badge offline">🔒 未设置钥匙</span>
+            </div>
+            <div class="desc" style="margin-top:8px;" id="syncDetail">
+                设置钥匙后，手机和电脑数据自动同步。
+            </div>
+        </div>
+
+        <!-- 设置 Token -->
+        <div class="settings-card">
+            <h3>🔑 设置钥匙</h3>
+            <div class="desc">
+                去 <a href="https://github.com/settings/tokens" target="_blank" style="color:var(--accent3);">github.com/settings/tokens</a> 
+                创建一个 Token，只勾选 <b>gist</b> 权限，生成后粘贴到下面。
+            </div>
+            <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <div class="row">
+                <button class="btn btn-primary btn-sm" onclick="saveToken()">💾 保存钥匙</button>
+                <button class="btn btn-secondary btn-sm" onclick="document.getElementById('tokenInput').type=document.getElementById('tokenInput').type==='password'?'text':'password'">👁 显示</button>
+            </div>
+        </div>
+
+        <!-- 手动同步 -->
+        <div class="settings-card" id="manualSyncCard" style="display:none;">
+            <h3>🔄 手动同步</h3>
+            <div class="desc">正常情况下自动同步。如果不同步，可以手动触发。</div>
+            <div class="row">
+                <button class="btn btn-secondary btn-sm" onclick="pullFromGist()">📥 从云端拉取</button>
+                <button class="btn btn-primary btn-sm" onclick="pushToGist()">📤 推送到云端</button>
+            </div>
+        </div>
+
+        <!-- 导出导入 -->
+        <div class="settings-card">
+            <h3>📦 导出 / 导入</h3>
+            <div class="desc">不需要钥匙也能跨设备转移数据。导出→复制文本→在另一台设备上导入。</div>
+            <div class="row">
+                <button class="btn btn-secondary btn-sm" onclick="exportData()">📤 导出数据</button>
+                <button class="btn btn-secondary btn-sm" onclick="showImportArea()">📥 导入数据</button>
+            </div>
+            <textarea id="importArea" style="display:none;margin-top:8px;height:80px;font-size:0.7rem;" placeholder="粘贴之前导出的数据..."></textarea>
+            <button id="importBtn" class="btn btn-primary btn-sm" style="display:none;margin-top:6px;" onclick="importData()">确认导入</button>
+        </div>
+
+        <!-- 清除钥匙 -->
+        <div class="settings-card" id="clearTokenCard" style="display:none;">
+            <h3>🗑 清除钥匙</h3>
+            <div class="desc">清除后数据仍在本地，但不再同步到云端。</div>
+            <button class="btn btn-danger btn-sm" onclick="clearToken()">清除钥匙</button>
+        </div>
+
+        <!-- 重置所有 -->
+        <div class="settings-card">
+            <h3>⚠️ 重置所有数据</h3>
+            <div class="desc">清空所有本地任务和统计记录。云端数据不受影响。</div>
+            <button class="btn btn-danger btn-sm" onclick="resetAll()">重置</button>
+        </div>
+    </div>
+
+    <!-- ── 底部导航 ── -->
     <div class="tab-bar">
         <button class="tab active" data-panel="panel-home"><span class="icon">🏠</span> 首页</button>
         <button class="tab" data-panel="panel-tasks"><span class="icon">📝</span> 任务</button>
         <button class="tab" data-panel="panel-stats"><span class="icon">📊</span> 统计</button>
+        <button class="tab" data-panel="panel-settings"><span class="icon">⚙️</span> 设置</button>
     </div>
 
     <script>
-        // ═══════════════ 持久化引擎 ═══════════════
-        const STORAGE_KEY = 'time_seed_data_v3';
-        const BACKUP_KEY = 'time_seed_backup_v3';
+        // ═══════════════ 存储引擎 ═══════════════
+        const STORAGE_KEY = 'time_seed_data_v4';
+        const BACKUP_KEY = 'time_seed_backup_v4';
+        const TOKEN_KEY = 'time_seed_token';
+        const GIST_ID_KEY = 'time_seed_gist_id';
         const TODAY_KEY = () => 'ts_day_' + new Date().toISOString().slice(0, 10);
 
         function loadData() {
@@ -200,21 +270,18 @@
                 try {
                     const data = JSON.parse(raw);
                     if (data && typeof data === 'object') {
-                        try { localStorage.setItem(BACKUP_KEY, raw); } catch(e) {}
+                        try { localStorage.setItem(BACKUP_KEY, raw); } catch (e) {}
                         return data;
                     }
-                } catch(e) {}
+                } catch (e) {}
             }
             const backup = localStorage.getItem(BACKUP_KEY);
             if (backup) {
                 try {
                     const data = JSON.parse(backup);
-                    if (data && typeof data === 'object') {
-                        localStorage.setItem(STORAGE_KEY, backup);
-                        console.warn('⚠️ 从备份恢复数据');
-                        return data;
-                    }
-                } catch(e) {}
+                    localStorage.setItem(STORAGE_KEY, backup);
+                    return data;
+                } catch (e) {}
             }
             return { tasks: [], focusMinutes: {}, pomodoroCount: 0, streak: 0, lastActiveDate: null, totalTasksDone: 0, bestDay: 0 };
         }
@@ -224,76 +291,277 @@
                 const json = JSON.stringify(data);
                 localStorage.setItem(STORAGE_KEY, json);
                 localStorage.setItem(BACKUP_KEY, json);
-                flashSaveIndicator();
-            } catch(e) {
+                flashSaveIndicator('local');
+            } catch (e) {
                 try {
                     localStorage.removeItem(BACKUP_KEY);
                     const json2 = JSON.stringify(data);
                     localStorage.setItem(STORAGE_KEY, json2);
                     localStorage.setItem(BACKUP_KEY, json2);
-                } catch(e2) {
-                    showToast('⚠️ 存储空间不足');
-                }
+                } catch (e2) { showToast('⚠️ 存储空间不足'); }
             }
         }
 
-        function flashSaveIndicator() {
+        function flashSaveIndicator(type) {
             const indicator = document.getElementById('saveIndicator');
             const dot = document.getElementById('saveDot');
+            const label = document.getElementById('saveLabel');
             indicator.classList.add('show');
             dot.classList.add('pulse');
+            if (type === 'cloud') {
+                dot.classList.add('synced');
+                label.textContent = '已同步 ☁️';
+            } else {
+                dot.classList.remove('synced');
+                label.textContent = '已保存';
+            }
             clearTimeout(window._sit);
             window._sit = setTimeout(() => {
                 dot.classList.remove('pulse');
                 setTimeout(() => indicator.classList.remove('show'), 600);
-            }, 400);
+            }, 600);
         }
 
-        function checkBackupRecovery() {
-            const mainRaw = localStorage.getItem(STORAGE_KEY);
-            const backupRaw = localStorage.getItem(BACKUP_KEY);
-            if (!mainRaw && backupRaw) {
-                document.getElementById('recoveryBanner').classList.add('show');
+        // ═══════════════ Token 管理 ═══════════════
+        let _token = localStorage.getItem(TOKEN_KEY) || '';
+        let _gistId = localStorage.getItem(GIST_ID_KEY) || '';
+
+        function getToken() { return _token; }
+        function getGistId() { return _gistId; }
+
+        function saveToken() {
+            const input = document.getElementById('tokenInput');
+            const val = input.value.trim();
+            if (!val) { showToast('请粘贴钥匙'); return; }
+            if (!val.startsWith('ghp_') && !val.startsWith('github_pat_')) {
+                showToast('⚠️ 钥匙格式不对，应该以 ghp_ 开头');
+                return;
             }
-        }
-        function recoverBackup() {
-            const backup = localStorage.getItem(BACKUP_KEY);
-            if (backup) {
-                try {
-                    appData = JSON.parse(backup);
-                    saveData(appData);
-                    refreshAllUI();
-                    showToast('✅ 数据已恢复！');
-                } catch(e) { showToast('❌ 恢复失败'); }
-            }
-            document.getElementById('recoveryBanner').classList.remove('show');
-        }
-        function dismissRecovery() {
-            document.getElementById('recoveryBanner').classList.remove('show');
+            _token = val;
+            _gistId = ''; // 重置 gist id，下次自动创建
+            localStorage.setItem(TOKEN_KEY, _token);
+            localStorage.removeItem(GIST_ID_KEY);
+            input.value = '';
+            showToast('✅ 钥匙已保存！');
+            refreshSettingsUI();
+            // 立即尝试同步
+            pushToGist(true);
         }
 
+        function clearToken() {
+            if (!confirm('确定清除钥匙？本地数据保留，但不再同步。')) return;
+            _token = '';
+            _gistId = '';
+            localStorage.removeItem(TOKEN_KEY);
+            localStorage.removeItem(GIST_ID_KEY);
+            document.getElementById('tokenInput').value = '';
+            showToast('🗑 钥匙已清除');
+            refreshSettingsUI();
+        }
+
+        // ═══════════════ GitHub Gist API ═══════════════
+        async function pushToGist(silent) {
+            if (!_token) {
+                if (!silent) showToast('⚠️ 请先在设置里粘贴钥匙');
+                return;
+            }
+            const content = JSON.stringify(appData, null, 2);
+            const filename = 'time-seed-data.json';
+            try {
+                let url, method;
+                if (_gistId) {
+                    url = `https://api.github.com/gists/${_gistId}`;
+                    method = 'PATCH';
+                } else {
+                    url = 'https://api.github.com/gists';
+                    method = 'POST';
+                }
+                const body = {
+                    description: '🌱 时光种子 · 自动同步数据',
+                    public: false,
+                    files: { [filename]: { content } }
+                };
+                const resp = await fetch(url, {
+                    method,
+                    headers: {
+                        'Authorization': `token ${_token}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json',
+                    },
+                    body: JSON.stringify(body),
+                });
+                if (!resp.ok) {
+                    const err = await resp.json();
+                    throw new Error(err.message || '请求失败');
+                }
+                const data = await resp.json();
+                if (!_gistId && data.id) {
+                    _gistId = data.id;
+                    localStorage.setItem(GIST_ID_KEY, _gistId);
+                }
+                flashSaveIndicator('cloud');
+                if (!silent) showToast('☁️ 已同步到云端');
+                refreshSettingsUI();
+            } catch (e) {
+                console.error('推送失败:', e);
+                if (!silent) showToast('❌ 同步失败: ' + e.message);
+            }
+        }
+
+        async function pullFromGist() {
+            if (!_token) { showToast('⚠️ 请先设置钥匙'); return; }
+            if (!_gistId) { showToast('📭 还没有云端数据，先推送一次'); return; }
+            try {
+                const resp = await fetch(`https://api.github.com/gists/${_gistId}`, {
+                    headers: {
+                        'Authorization': `token ${_token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                    },
+                });
+                if (!resp.ok) throw new Error('拉取失败');
+                const data = await resp.json();
+                const file = data.files && data.files['time-seed-data.json'];
+                if (!file || !file.content) { showToast('📭 云端没有数据'); return; }
+                const cloudData = JSON.parse(file.content);
+                appData = cloudData;
+                saveData(appData);
+                _dirty = false;
+                refreshAllUI();
+                showToast('📥 已从云端恢复');
+            } catch (e) {
+                showToast('❌ 拉取失败: ' + e.message);
+            }
+        }
+
+        function refreshSettingsUI() {
+            const statusArea = document.getElementById('syncStatusArea');
+            const syncDetail = document.getElementById('syncDetail');
+            const manualSyncCard = document.getElementById('manualSyncCard');
+            const clearTokenCard = document.getElementById('clearTokenCard');
+            const lastSyncInfo = document.getElementById('lastSyncInfo');
+
+            if (_token) {
+                statusArea.innerHTML = '<span class="status-badge online">🔗 钥匙已设置</span>';
+                syncDetail.textContent = _gistId ? '✅ 云端连接正常，数据自动同步中。' : '🔗 钥匙有效，下次操作时将自动创建云端存储。';
+                manualSyncCard.style.display = 'block';
+                clearTokenCard.style.display = 'block';
+                if (lastSyncInfo) lastSyncInfo.textContent = '📂 数据模式：本地 + 云端同步 ☁️';
+            } else {
+                statusArea.innerHTML = '<span class="status-badge offline">🔒 未设置钥匙</span>';
+                syncDetail.textContent = '设置钥匙后，手机和电脑数据自动同步。不需要钥匙也能纯本地使用。';
+                manualSyncCard.style.display = 'none';
+                clearTokenCard.style.display = 'none';
+                if (lastSyncInfo) lastSyncInfo.textContent = '📂 数据模式：本地';
+            }
+        }
+
+        // ═══════════════ 导出导入 ═══════════════
+        function exportData() {
+            const dataStr = JSON.stringify(appData, null, 2);
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(dataStr).then(() => {
+                    showToast('📋 数据已复制到剪贴板！');
+                }).catch(() => {
+                    fallbackExport(dataStr);
+                });
+            } else {
+                fallbackExport(dataStr);
+            }
+        }
+
+        function fallbackExport(dataStr) {
+            const ta = document.getElementById('importArea');
+            ta.style.display = 'block';
+            ta.value = dataStr;
+            ta.select();
+            document.getElementById('importBtn').style.display = 'none';
+            showToast('👆 长按上方文本全选复制');
+        }
+
+        function showImportArea() {
+            const ta = document.getElementById('importArea');
+            const btn = document.getElementById('importBtn');
+            if (ta.style.display === 'block') {
+                ta.style.display = 'none';
+                btn.style.display = 'none';
+                ta.value = '';
+            } else {
+                ta.style.display = 'block';
+                btn.style.display = 'block';
+                ta.value = '';
+                ta.placeholder = '粘贴之前导出的数据...';
+                ta.focus();
+            }
+        }
+
+        function importData() {
+            const ta = document.getElementById('importArea');
+            const val = ta.value.trim();
+            if (!val) { showToast('请先粘贴数据'); return; }
+            try {
+                const incoming = JSON.parse(val);
+                if (!incoming || typeof incoming !== 'object') throw new Error('格式错误');
+                appData = incoming;
+                saveData(appData);
+                _dirty = false;
+                refreshAllUI();
+                ta.value = '';
+                ta.style.display = 'none';
+                document.getElementById('importBtn').style.display = 'none';
+                showToast('✅ 数据导入成功！');
+            } catch (e) {
+                showToast('❌ 数据格式错误');
+            }
+        }
+
+        function resetAll() {
+            if (!confirm('⚠️ 确定要删除所有本地数据吗？此操作不可撤销！')) return;
+            if (!confirm('再次确认：所有任务、番茄记录、统计数据将被清空。')) return;
+            appData = { tasks: [], focusMinutes: {}, pomodoroCount: 0, streak: 0, lastActiveDate: null, totalTasksDone: 0, bestDay: 0 };
+            saveData(appData);
+            _dirty = false;
+            refreshAllUI();
+            showToast('🗑 所有数据已清空');
+        }
+
+        // ═══════════════ 应用数据 ═══════════════
         let appData = loadData();
         let _dirty = false;
         function markDirty() { _dirty = true; }
 
         // 每3秒自动保存
         setInterval(() => {
-            if (_dirty) { saveData(appData); _dirty = false; }
+            if (_dirty) {
+                saveData(appData);
+                _dirty = false;
+                // 有钥匙则后台静默同步
+                if (_token) pushToGist(true);
+            }
         }, 3000);
 
-        // 切后台立即保存
+        // 切后台时保存
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) { saveData(appData); _dirty = false; }
-            else { appData = loadData(); refreshAllUI(); }
+            if (document.hidden) {
+                saveData(appData);
+                _dirty = false;
+                if (_token) pushToGist(true);
+            } else {
+                appData = loadData();
+                refreshAllUI();
+                refreshSettingsUI();
+                // 从云端拉取最新数据
+                if (_token && _gistId) pullFromGist();
+            }
         });
 
-        // 页面关闭前保存
-        window.addEventListener('pagehide', () => { saveData(appData); });
+        window.addEventListener('pagehide', () => {
+            saveData(appData);
+            if (_token) pushToGist(true);
+        });
 
-        // 跨标签页同步
         window.addEventListener('storage', (e) => {
             if (e.key === STORAGE_KEY && e.newValue) {
-                try { appData = JSON.parse(e.newValue); refreshAllUI(); } catch(e) {}
+                try { appData = JSON.parse(e.newValue); refreshAllUI(); } catch (e) {}
             }
         });
 
@@ -364,7 +632,10 @@
             if (timerMode === 'focus') {
                 addTodayFocus(modeConfig.focus.minutes);
                 appData.pomodoroCount = (appData.pomodoroCount || 0) + 1;
-                markDirty(); saveData(appData); _dirty = false;
+                markDirty();
+                saveData(appData);
+                _dirty = false;
+                if (_token) pushToGist(true);
                 showToast('🎉 一个番茄完成！');
                 switchMode('shortBreak'); startTimer();
             } else {
@@ -376,7 +647,7 @@
 
         function updateTimerDisplay() {
             const m = Math.floor(timerSeconds / 60), s = timerSeconds % 60;
-            document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+            document.getElementById('timerDisplay').textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
         }
         function updateModeLabel() {
             const cfg = modeConfig[timerMode];
@@ -388,12 +659,14 @@
         function resetCircle() { document.getElementById('fgCircle').style.strokeDashoffset = '0'; }
 
         // ═══════════════ 任务 ═══════════════
-        function addTask(text, priority = 'mid') {
+        function addTask(text, priority) {
             if (!text) text = document.getElementById('taskInput').value.trim();
             if (!text) return;
+            if (!priority) priority = 'mid';
             appData.tasks.unshift({ id: Date.now(), text, priority, done: false, createdAt: new Date().toISOString(), doneAt: null });
             markDirty();
-            if (document.getElementById('taskInput')) document.getElementById('taskInput').value = '';
+            const taskInput = document.getElementById('taskInput');
+            if (taskInput) taskInput.value = '';
             refreshAllUI();
             showToast('✨ 新任务已添加');
         }
@@ -432,12 +705,13 @@
 
         function renderTaskItem(task) {
             const pc = 'priority-' + task.priority, dc = task.done ? ' done' : '';
-            const ts = new Date(task.createdAt).toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' });
-            const pl = { high:'🔴 高', mid:'🟠 中', low:'🟢 低' };
+            const ts = new Date(task.createdAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            const pl = { high: '🔴 高', mid: '🟠 中', low: '🟢 低' };
+            const safeText = task.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
             return `<li class="task-item ${pc}${dc}">
               <div class="check-circle" onclick="toggleTask(${task.id})">✓</div>
               <div class="task-info" onclick="cyclePriority(${task.id})">
-                <div class="task-text">${task.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+                <div class="task-text">${safeText}</div>
                 <div class="task-meta"><span>${pl[task.priority]}</span><span>🕐 ${ts}</span></div>
               </div>
               <button class="btn btn-secondary btn-sm" style="padding:4px 10px;font-size:0.7rem;" onclick="event.stopPropagation();deleteTask(${task.id})">✕</button>
@@ -447,7 +721,7 @@
         function cyclePriority(id) {
             const task = appData.tasks.find(t => t.id === id);
             if (!task) return;
-            const order = ['high','mid','low'];
+            const order = ['high', 'mid', 'low'];
             setPriority(id, order[(order.indexOf(task.priority) + 1) % 3]);
         }
 
@@ -460,26 +734,34 @@
                 c.innerHTML = '<div class="empty-state"><span class="emoji">🌱</span><p>还没有任务，种下第一颗时光种子吧</p></div>';
                 return;
             }
-            tasks = [...tasks].sort((a,b) => {
+            tasks = [...tasks].sort((a, b) => {
                 if (a.done !== b.done) return a.done ? 1 : -1;
-                return {high:0,mid:1,low:2}[a.priority] - {high:0,mid:1,low:2}[b.priority];
+                return { high: 0, mid: 1, low: 2 }[a.priority] - { high: 0, mid: 1, low: 2 }[b.priority];
             });
             c.innerHTML = tasks.map(renderTaskItem).join('');
         }
 
         function refreshAllUI() {
             const inc = appData.tasks.filter(t => !t.done).length;
-            const doneT = appData.tasks.filter(t => t.done && t.doneAt && t.doneAt.slice(0,10) === new Date().toISOString().slice(0,10)).length;
-            document.getElementById('statDone').textContent = doneT;
-            document.getElementById('statRemain').textContent = inc;
-            document.getElementById('statFocus').textContent = getTodayFocus() + 'min';
+            const doneT = appData.tasks.filter(t => t.done && t.doneAt && t.doneAt.slice(0, 10) === new Date().toISOString().slice(0, 10)).length;
+            const elDone = document.getElementById('statDone');
+            const elRemain = document.getElementById('statRemain');
+            const elFocus = document.getElementById('statFocus');
+            if (elDone) elDone.textContent = doneT;
+            if (elRemain) elRemain.textContent = inc;
+            if (elFocus) elFocus.textContent = getTodayFocus() + 'min';
             renderTaskList('taskListHome', 'incomplete');
             renderTaskList('taskListAll', 'all');
-            document.getElementById('streakNum').textContent = appData.streak || 0;
-            document.getElementById('statTotalFocus').textContent = Object.values(appData.focusMinutes).reduce((a,b) => a+b, 0);
-            document.getElementById('statTotalTasks').textContent = appData.totalTasksDone || 0;
-            document.getElementById('statPomodoros').textContent = appData.pomodoroCount || 0;
-            document.getElementById('statBestDay').textContent = (appData.bestDay || 0) + 'min';
+            const elStreak = document.getElementById('streakNum');
+            const elTotalFocus = document.getElementById('statTotalFocus');
+            const elTotalTasks = document.getElementById('statTotalTasks');
+            const elPomodoros = document.getElementById('statPomodoros');
+            const elBestDay = document.getElementById('statBestDay');
+            if (elStreak) elStreak.textContent = appData.streak || 0;
+            if (elTotalFocus) elTotalFocus.textContent = Object.values(appData.focusMinutes).reduce((a, b) => a + b, 0);
+            if (elTotalTasks) elTotalTasks.textContent = appData.totalTasksDone || 0;
+            if (elPomodoros) elPomodoros.textContent = appData.pomodoroCount || 0;
+            if (elBestDay) elBestDay.textContent = (appData.bestDay || 0) + 'min';
         }
 
         let toastTimer;
@@ -487,15 +769,18 @@
             const t = document.getElementById('toast');
             t.textContent = msg; t.classList.add('show');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
         }
 
         function switchPanel(pid) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(pid).classList.add('active');
+            const panel = document.getElementById(pid);
+            if (panel) panel.classList.add('active');
             document.querySelectorAll('.tab-bar .tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`[data-panel="${pid}"]`).classList.add('active');
+            const tab = document.querySelector(`[data-panel="${pid}"]`);
+            if (tab) tab.classList.add('active');
             refreshAllUI();
+            if (pid === 'panel-settings') refreshSettingsUI();
         }
 
         document.querySelectorAll('.tab-bar .tab').forEach(tab => {
@@ -505,23 +790,32 @@
         function updateGreeting() {
             const h = new Date().getHours();
             let g;
-            if (h<6) g='夜深了 🌙'; else if (h<9) g='早安 ☀️'; else if (h<12) g='上午好 🌤';
-            else if (h<14) g='中午好 ☀️'; else if (h<18) g='下午好 🌿'; else if (h<22) g='晚上好 🌆'; else g='夜深了 🌙';
-            const tips = ['今天也要好好种下时光的种子','专注25分钟，休息5分钟，节奏就是一切','完成比完美更重要','每一个番茄，都是对自己的承诺','把大目标拆成小任务，一步步来'];
-            document.getElementById('greeting').innerHTML = `${g}<small>${tips[Math.floor(Math.random()*tips.length)]}</small>`;
+            if (h < 6) g = '夜深了 🌙';
+            else if (h < 9) g = '早安 ☀️';
+            else if (h < 12) g = '上午好 🌤';
+            else if (h < 14) g = '中午好 ☀️';
+            else if (h < 18) g = '下午好 🌿';
+            else if (h < 22) g = '晚上好 🌆';
+            else g = '夜深了 🌙';
+            const tips = ['今天也要好好种下时光的种子', '专注25分钟，休息5分钟，节奏就是一切', '完成比完美更重要', '每一个番茄，都是对自己的承诺', '把大目标拆成小任务，一步步来'];
+            const el = document.getElementById('greeting');
+            if (el) el.innerHTML = `${g}<small>${tips[Math.floor(Math.random() * tips.length)]}</small>`;
         }
 
         function init() {
             updateGreeting();
             updateTimerDisplay(); updateModeLabel(); resetCircle();
             refreshAllUI();
-            checkBackupRecovery();
+            refreshSettingsUI();
             stopTimer();
             document.getElementById('btnTimer').textContent = '▶ 开始';
-            console.log('🌱 时光种子 v3 — 数据已加固');
+            // 有钥匙且有 gist id，启动时从云端拉取
+            if (_token && _gistId) {
+                pullFromGist();
+            }
         }
 
-        document.addEventListener('dblclick', e => { if (e.target.closest('button')) e.preventDefault(); }, {passive:false});
+        document.addEventListener('dblclick', e => { if (e.target.closest('button')) e.preventDefault(); }, { passive: false });
         init();
     </script>
 </body>
