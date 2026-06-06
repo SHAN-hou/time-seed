@@ -49,10 +49,23 @@
         .pomodoro-card .timer-ring .time-display{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
         .pomodoro-card .timer-ring .time-display .time{font-size:2.4rem;font-weight:700;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;font-family:'SF Mono','Menlo','Consolas',monospace;}
         .pomodoro-card .timer-ring .time-display .mode-label{font-size:0.72rem;color:var(--sub);font-weight:500;}
-        .pomodoro-card .timer-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+        .pomodoro-card .timer-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center;}
         .btn{border:none;font-family:var(--font);font-size:0.9rem;font-weight:600;padding:10px 22px;border-radius:24px;cursor:pointer;transition:var(--transition);letter-spacing:0.01em;}
-        .btn-primary{background:var(--accent);color:#fff;}
-        .btn-primary:active{background:#d47e55;transform:scale(0.96);}
+        .btn-primary{background:var(--accent);color:#fff;font-size:1rem;padding:12px 28px;box-shadow:0 4px 16px rgba(232,149,106,0.35);}
+        .btn-primary:active{background:#d47e55;transform:scale(0.94);box-shadow:0 2px 8px rgba(232,149,106,0.25);}
+        .btn-start{
+            background:var(--accent);color:#fff;
+            font-size:1.1rem;padding:14px 34px;border-radius:28px;
+            box-shadow:0 4px 20px rgba(232,149,106,0.4);
+            animation:pulse-btn 2s infinite;
+            letter-spacing:0.03em;
+        }
+        .btn-start:active{background:#d47e55;transform:scale(0.92);box-shadow:0 2px 8px rgba(232,149,106,0.25);animation:none;}
+        .btn-start.running{animation:none;background:#e8956a;box-shadow:0 3px 12px rgba(232,149,106,0.3);}
+        @keyframes pulse-btn{
+            0%,100%{box-shadow:0 4px 20px rgba(232,149,106,0.4);transform:translateY(0);}
+            50%{box-shadow:0 8px 30px rgba(232,149,106,0.6);transform:translateY(-2px);}
+        }
         .btn-secondary{background:#f0ebe0;color:var(--text);}
         .btn-secondary:active{background:#e5ddcf;transform:scale(0.96);}
         .btn-danger{background:#fff0ee;color:var(--urgent);}
@@ -99,7 +112,7 @@
         .settings-card{background:var(--card);border-radius:var(--radius);padding:18px 20px;margin:8px 16px;box-shadow:var(--shadow);}
         .settings-card h3{font-size:0.95rem;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
         .settings-card .desc{font-size:0.75rem;color:var(--sub);margin-bottom:10px;line-height:1.5;}
-        .settings-card input[type="text"],.settings-card textarea{width:100%;border:2px solid #e5ddcf;border-radius:12px;padding:10px 14px;font-family:var(--font);font-size:0.85rem;outline:none;transition:var(--transition);resize:vertical;}
+        .settings-card input[type="text"],.settings-card input[type="password"],.settings-card textarea{width:100%;border:2px solid #e5ddcf;border-radius:12px;padding:10px 14px;font-family:var(--font);font-size:0.85rem;outline:none;transition:var(--transition);resize:vertical;}
         .settings-card input:focus,.settings-card textarea:focus{border-color:var(--accent);}
         .settings-card .row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap;}
         .status-badge{display:inline-flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:20px;}
@@ -113,7 +126,7 @@
     <div class="save-indicator" id="saveIndicator"><span class="dot" id="saveDot"></span><span id="saveLabel">已保存</span></div>
     <div class="toast" id="toast"></div>
 
-    <!-- ── Header ── -->
+    <!-- Header -->
     <div class="header">
         <div class="greeting" id="greeting">早安 ☀️<small>今天也要好好种下时光的种子</small></div>
         <div class="avatar">🌱</div>
@@ -143,7 +156,7 @@
                 <button class="btn btn-secondary btn-sm" onclick="switchMode('focus')">🍅 25分</button>
                 <button class="btn btn-secondary btn-sm" onclick="switchMode('shortBreak')">☕ 5分</button>
                 <button class="btn btn-secondary btn-sm" onclick="switchMode('longBreak')">🌿 15分</button>
-                <button class="btn btn-primary btn-sm" id="btnTimer" onclick="toggleTimer()">▶ 开始</button>
+                <button class="btn btn-start" id="btnTimer" onclick="toggleTimer()">▶ 开始专注</button>
             </div>
         </div>
         <div class="section-title">📋 今日任务</div>
@@ -182,11 +195,10 @@
         </div>
     </div>
 
-    <!-- ── 面板：设置（新增）── -->
+    <!-- ── 面板：设置 ── -->
     <div class="panel" id="panel-settings">
         <div class="section-title">⚙️ 设置</div>
 
-        <!-- 同步状态 -->
         <div class="settings-card">
             <h3>☁️ 云同步状态</h3>
             <div id="syncStatusArea">
@@ -197,7 +209,6 @@
             </div>
         </div>
 
-        <!-- 设置 Token -->
         <div class="settings-card">
             <h3>🔑 设置钥匙</h3>
             <div class="desc">
@@ -211,7 +222,6 @@
             </div>
         </div>
 
-        <!-- 手动同步 -->
         <div class="settings-card" id="manualSyncCard" style="display:none;">
             <h3>🔄 手动同步</h3>
             <div class="desc">正常情况下自动同步。如果不同步，可以手动触发。</div>
@@ -221,7 +231,6 @@
             </div>
         </div>
 
-        <!-- 导出导入 -->
         <div class="settings-card">
             <h3>📦 导出 / 导入</h3>
             <div class="desc">不需要钥匙也能跨设备转移数据。导出→复制文本→在另一台设备上导入。</div>
@@ -233,14 +242,12 @@
             <button id="importBtn" class="btn btn-primary btn-sm" style="display:none;margin-top:6px;" onclick="importData()">确认导入</button>
         </div>
 
-        <!-- 清除钥匙 -->
         <div class="settings-card" id="clearTokenCard" style="display:none;">
             <h3>🗑 清除钥匙</h3>
             <div class="desc">清除后数据仍在本地，但不再同步到云端。</div>
             <button class="btn btn-danger btn-sm" onclick="clearToken()">清除钥匙</button>
         </div>
 
-        <!-- 重置所有 -->
         <div class="settings-card">
             <h3>⚠️ 重置所有数据</h3>
             <div class="desc">清空所有本地任务和统计记录。云端数据不受影响。</div>
@@ -338,13 +345,12 @@
                 return;
             }
             _token = val;
-            _gistId = ''; // 重置 gist id，下次自动创建
+            _gistId = '';
             localStorage.setItem(TOKEN_KEY, _token);
             localStorage.removeItem(GIST_ID_KEY);
             input.value = '';
             showToast('✅ 钥匙已保存！');
             refreshSettingsUI();
-            // 立即尝试同步
             pushToGist(true);
         }
 
@@ -461,9 +467,7 @@
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(dataStr).then(() => {
                     showToast('📋 数据已复制到剪贴板！');
-                }).catch(() => {
-                    fallbackExport(dataStr);
-                });
+                }).catch(() => fallbackExport(dataStr));
             } else {
                 fallbackExport(dataStr);
             }
@@ -534,12 +538,10 @@
             if (_dirty) {
                 saveData(appData);
                 _dirty = false;
-                // 有钥匙则后台静默同步
                 if (_token) pushToGist(true);
             }
         }, 3000);
 
-        // 切后台时保存
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 saveData(appData);
@@ -549,7 +551,6 @@
                 appData = loadData();
                 refreshAllUI();
                 refreshSettingsUI();
-                // 从云端拉取最新数据
                 if (_token && _gistId) pullFromGist();
             }
         });
@@ -591,24 +592,36 @@
             longBreak: { minutes: 15, emoji: '🌿', label: '长休息' },
         };
 
+        function updateBtnStyle() {
+            const btn = document.getElementById('btnTimer');
+            if (timerRunning) {
+                btn.textContent = '⏸ 暂停';
+                btn.classList.add('running');
+            } else {
+                btn.textContent = '▶ 开始专注';
+                btn.classList.remove('running');
+            }
+        }
+
         function switchMode(mode) {
             if (timerRunning) { if (!confirm('切换模式会重置计时，确定吗？')) return; stopTimer(); }
             timerMode = mode;
             timerSeconds = modeConfig[mode].minutes * 60;
             timerTotal = timerSeconds;
             updateTimerDisplay(); updateModeLabel(); resetCircle();
+            updateBtnStyle();
         }
 
         function toggleTimer() { timerRunning ? pauseTimer() : startTimer(); }
 
         function startTimer() {
             timerRunning = true;
-            document.getElementById('btnTimer').textContent = '⏸ 暂停';
             if (timerSeconds <= 0) {
                 timerSeconds = modeConfig[timerMode].minutes * 60;
                 timerTotal = timerSeconds;
                 updateTimerDisplay(); resetCircle();
             }
+            updateBtnStyle();
             timerInterval = setInterval(() => {
                 timerSeconds--;
                 updateTimerDisplay(); updateCircle();
@@ -618,13 +631,13 @@
 
         function pauseTimer() {
             timerRunning = false; clearInterval(timerInterval);
-            document.getElementById('btnTimer').textContent = '▶ 继续';
+            updateBtnStyle();
             markDirty();
         }
 
         function stopTimer() {
             timerRunning = false; clearInterval(timerInterval);
-            document.getElementById('btnTimer').textContent = '▶ 开始';
+            updateBtnStyle();
         }
 
         function finishTimer() {
@@ -808,11 +821,8 @@
             refreshAllUI();
             refreshSettingsUI();
             stopTimer();
-            document.getElementById('btnTimer').textContent = '▶ 开始';
-            // 有钥匙且有 gist id，启动时从云端拉取
-            if (_token && _gistId) {
-                pullFromGist();
-            }
+            updateBtnStyle();
+            if (_token && _gistId) pullFromGist();
         }
 
         document.addEventListener('dblclick', e => { if (e.target.closest('button')) e.preventDefault(); }, { passive: false });
